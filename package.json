@@ -1,0 +1,27 @@
+{
+  "name": "itaninfo",
+  "version": "1.0.0",
+  "description": "Catálogo virtual para uma lógica de informática",
+  "homepage": "https://github.com/pedroT-web/ItanInfo#readme",
+  "bugs": {
+    "url": "https://github.com/pedroT-web/ItanInfo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedroT-web/ItanInfo.git"
+  },
+  "license": "ISC",
+  "author": "pedro augusto",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
