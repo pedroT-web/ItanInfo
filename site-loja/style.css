@@ -1,0 +1,45 @@
+.imagem-cards {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+ 
+
+    transition: transform 0.5s ease;
+    object-position: center;
+    display: block;
+}
+
+.div-imagem{
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    height: 400px;
+}
+
+.div-imagem::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 20px 20px rgba(0, 0, 0, 0);
+  transition: box-shadow 0.6s ease;
+  pointer-events: none;
+}
+
+/* hover */
+.div-imagem:hover .imagem-cards {
+  transform: scale(1.1);
+}
+
+.div-imagem:hover::after {
+  box-shadow: inset 0 20px 60px rgba(54, 54, 54, 0.5);
+}
+
+.card {
+    border-radius: 15px !important;
+
+    overflow: hidden;
+    position: relative;
+}

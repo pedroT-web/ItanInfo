@@ -1,12 +1,12 @@
-function fnCarregarDados(){
-    fetch("http://localhost:3000/produtos/", {method: "GET"})
-    .then(response => response.json())
-    .then((produtos) => {
-        produtos.forEach(produto => {
-            fnMontarCardProduto(produto)
+function fnCarregarDados() {
+    fetch("http://localhost:3000/produtos/", { method: "GET" })
+        .then(response => response.json())
+        .then((produtos) => {
+            produtos.forEach(produto => {
+                fnMontarCardProduto(produto)
+            })
         })
-    })
-    .catch(erro => console.log(erro.mesage))
+        .catch(erro => console.log(erro.mesage))
 }
 
 fnCarregarDados()
@@ -15,8 +15,10 @@ function fnMontarCardProduto(produto) {
     let cartao = `
         <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3">
                 <div class="card">
-                    <img src="${produto.foto}"
+                <div class="div-imagem">
+                    <img class="imagem-cards" src="${produto.foto}"
                         class="card-img-top" alt="${produto.nome}">
+                        </div>
                     <div class="card-body">
                         <h5 class="card-title">${produto.titulo}</h5>
                         <p class="card-text">${produto.descricao}</p>
