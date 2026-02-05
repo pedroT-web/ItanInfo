@@ -1,14 +1,16 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-const porta = 3000
+const porta = 3000;
 
-app.use(express.json())
+app.listen(porta);
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*")
-    res.send("ItanInfo")
-})
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.send("ItanInfo");
+});
 
 // Arrey de produtos - Método inicial
 
@@ -37,12 +39,48 @@ app.get("/", (req, res) => {
 // ]
 
 
-const lista_produtos = require("./dados.json")
+// Arquivo json
+
+// const lista_produtos = require("./dados.json")
+
+let mysql = require("mysql")
+let conexao = mysql.createConnection({
+    host: "108.179.193.209",
+    user: "gutoxa27_alunos",
+    password: "JD_eXLNHp1ZG",
+    database: "gutoxa27_bd_loja"
+});
+
+conexao.connect(function (erro) {
+    if (erro) {
+        console.log("Deu ruim na conexão \n");
+        // console.log(erro)
+        throw erro;
+    } else {
+        console.log("Conexão deu bom \n");
+    }
+});
 
 // Read All - [GET] / produtos
 app.get("/produtos", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*")
-    res.send(lista_produtos)
-})
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
-app.listen(porta)
+    // Enviar dados de arquivo json
+    // res.send(lista_produtos);
+
+    conexao.query("SELECT * FROM produtos ORDER BY avaliacao ASC", (erro, lista_produtos, campos) => {
+        console.log(lista_produtos);
+        res.send(lista_produtos);
+    });
+
+    // 1 - SELECT * FROM produtos LIMIT 12
+    // 2 - SELECT * FROM produtos WHERE titulo LIKE 'a%'
+    // 3 - SELECT * FROM produtos WHERE preco = 410
+    // 4 - SELECT * FROM produtos WHERE avaliacao BETWEEN 4 AND 5 
+    // 5 - SELECT * FROM produtos WHERE avaliacao = 1 or avaliacao = 5
+    // 6 - SELECT * FROM produtos WHERE id BETWEEN 21 AND 32
+    // 7 - SELECT * FROM produtos WHERE id >= 41
+    // 8 - SELECT * FROM produtos WHERE avaliacao = 5 LIMIT 12
+    // 9 - SELECT * FROM produtos ORDER BY preco ASC
+    // 10 - SELECT * FROM produtos ORDER BY avaliacao ASC
+});
