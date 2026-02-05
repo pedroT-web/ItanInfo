@@ -84,3 +84,12 @@ app.get("/produtos", (req, res) => {
     // 9 - SELECT * FROM produtos ORDER BY preco ASC
     // 10 - SELECT * FROM produtos ORDER BY avaliacao ASC
 });
+
+app.get("/unidades", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    conexao.query("SELECT * FROM unidades", (erro, lista_unidades, campos) => {
+        console.log(lista_unidades);
+        res.send(lista_unidades);
+    })
+})

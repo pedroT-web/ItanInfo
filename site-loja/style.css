@@ -1,22 +1,22 @@
 .imagem-cards {
-    height: 400px;
-    width: 100%;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
- 
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 
-    transition: transform 0.5s ease;
-    object-position: center;
-    display: block;
+
+  transition: transform 0.5s ease;
+  object-position: center;
+  display: block;
 }
 
-.div-imagem{
-    display: flex;
-    justify-content: center;
-    position: relative;
+.div-imagem {
+  display: flex;
+  justify-content: center;
+  position: relative;
 
-    height: 400px;
+  height: 400px;
 }
 
 .div-imagem::after {
@@ -38,8 +38,12 @@
 }
 
 .card {
-    border-radius: 15px !important;
+  border-radius: 15px !important;
 
-    overflow: hidden;
-    position: relative;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-unidades {
+  height: 700px;
 }
