@@ -1,3 +1,7 @@
+body{
+  background-color: rgb(248, 245, 238);
+}
+
 .imagem-cards {
   height: 400px;
   width: 100%;
@@ -35,6 +39,8 @@
 
 .div-imagem:hover::after {
   box-shadow: inset 0 20px 60px rgba(54, 54, 54, 0.5);
+  transform: scale(1.1);
+
 }
 
 .card {
@@ -45,5 +51,22 @@
 }
 
 .card-unidades {
-  height: 700px;
+  height: 1000px;
+}
+
+.texto-endereco{
+  min-height: 45px !important;
+}
+
+.container_maps{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.botoes_nav{
+  color: rgb(107, 107, 107) !important;
+}
+
+.botoes_nav:hover{
+  color: rgba(128, 128, 128, 0.411) !important;
 }

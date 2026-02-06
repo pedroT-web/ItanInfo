@@ -68,7 +68,7 @@ app.get("/produtos", (req, res) => {
     // Enviar dados de arquivo json
     // res.send(lista_produtos);
 
-    conexao.query("SELECT * FROM produtos ORDER BY avaliacao ASC", (erro, lista_produtos, campos) => {
+    conexao.query("SELECT * FROM produtos", (erro, lista_produtos, campos) => {
         console.log(lista_produtos);
         res.send(lista_produtos);
     });
@@ -85,7 +85,7 @@ app.get("/produtos", (req, res) => {
     // 10 - SELECT * FROM produtos ORDER BY avaliacao ASC
 });
 
-app.get("/unidades", (req, res) => {
+let urlProdutos = app.get("/unidades", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     conexao.query("SELECT * FROM unidades", (erro, lista_unidades, campos) => {

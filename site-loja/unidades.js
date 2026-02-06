@@ -25,7 +25,17 @@ function fnMontarCardUnidades(unidade) {
                                 <div class="mt-2">
                                     <p class="card-text"><i class="bi bi-envelope me-2"></i>${unidade.email}</p>
                                     <p class="card-text"><i class="bi bi-telephone me-2"></i>${unidade.telefone}</p>
-                                    <p class="card-text "><i class="bi bi-house me-2"></i>${unidade.endereco}</p>
+                                    <p class="card-text texto-endereco"><i class="bi bi-house me-2"></i>${unidade.endereco}</p>
+                                    <div class="mt-5 container_maps">
+                                        <iframe
+                                        width="100%"
+                                        height="250px"
+                                        frameborder="0" style="border:0"
+                                        referrerpolicy="no-referrer-when-downgrade"
+                                        src="https://www.google.com/maps?q=${unidade.endereco}&output=embed"
+                                        allowfullscreen>
+                                        </iframe>
+                                    </div>
                                 </div>
                             </div>
                         </div>
