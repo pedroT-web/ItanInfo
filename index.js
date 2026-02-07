@@ -13,7 +13,6 @@ app.get("/", (req, res) => {
 });
 
 // Arrey de produtos - Método inicial
-
 // const lista_produtos = [
 //     {
 //         "titulo": "Red Nike",
@@ -40,10 +39,11 @@ app.get("/", (req, res) => {
 
 
 // Arquivo json
-
 // const lista_produtos = require("./dados.json")
 
-let mysql = require("mysql")
+
+// Conexão com o banco de dados
+let mysql = require("mysql");
 let conexao = mysql.createConnection({
     host: "108.179.193.209",
     user: "gutoxa27_alunos",
@@ -65,31 +65,38 @@ conexao.connect(function (erro) {
 app.get("/produtos", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
-    // Enviar dados de arquivo json
-    // res.send(lista_produtos);
-
-    conexao.query("SELECT * FROM produtos", (erro, lista_produtos, campos) => {
-        console.log(lista_produtos);
+    conexao.query(`SELECT * FROM produtos`, (erro, lista_produtos, campos) => {
         res.send(lista_produtos);
     });
-
-    // 1 - SELECT * FROM produtos LIMIT 12
-    // 2 - SELECT * FROM produtos WHERE titulo LIKE 'a%'
-    // 3 - SELECT * FROM produtos WHERE preco = 410
-    // 4 - SELECT * FROM produtos WHERE avaliacao BETWEEN 4 AND 5 
-    // 5 - SELECT * FROM produtos WHERE avaliacao = 1 or avaliacao = 5
-    // 6 - SELECT * FROM produtos WHERE id BETWEEN 21 AND 32
-    // 7 - SELECT * FROM produtos WHERE id >= 41
-    // 8 - SELECT * FROM produtos WHERE avaliacao = 5 LIMIT 12
-    // 9 - SELECT * FROM produtos ORDER BY preco ASC
-    // 10 - SELECT * FROM produtos ORDER BY avaliacao ASC
 });
 
-let urlProdutos = app.get("/unidades", (req, res) => {
+app.get("/produtos/:categoria", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    const parameterCategory = req.params.categoria;
+
+    conexao.query(`SELECT * FROM produtos WHERE categoria = '${parameterCategory}'`, (error, listar_produtos, campos) => {
+        res.send(listar_produtos);
+    });
+});
+
+app.get("/produtos/:categoria/:ordem", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    const parameterCategory = req.params.categoria;
+    const parameterOrder = req.params.ordem;
+    const queryOrder = `SELECT * FROM produtos WHERE categoria = '${parameterCategory}' ORDER BY ${parameterOrder} ASC`;
+    
+    conexao.query(queryOrder, (error, listar_produtos, campos) => {
+        res.send(listar_produtos);
+    })
+})
+
+app.get("/unidades", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     conexao.query("SELECT * FROM unidades", (erro, lista_unidades, campos) => {
         console.log(lista_unidades);
         res.send(lista_unidades);
-    })
-})
+    });
+});

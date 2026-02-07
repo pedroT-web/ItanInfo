@@ -1,5 +1,28 @@
 function fnCarregarDados() {
-    fetch("http://localhost:3000/produtos/", { method: "GET" })
+    const parametros = new URLSearchParams(window.location.search);
+
+    const filtrar = document.querySelector(".filtro");
+    const categoriaAtual = parametros.get("categoria")
+    filtrar.innerHTML = `
+    <li class="nav-item"><a class="nav-link active botoes_nav" aria-current="page"href="produtos.html?categoria=${categoriaAtual}&ordem=preco">Ordenar pelo preço</a></li>
+    <li class="nav-item"><a class="nav-link active botoes_nav" aria-current="page"href="produtos.html?categoria=${categoriaAtual}&ordem=titulo">Ordenar pelo título</a></li>
+    `
+
+    let rota_categoria = ""
+    let rota_ordem = ""
+    const isExistCategory = parametros.has("categoria");
+    const isExistOrder = parametros.has("ordem");
+
+    if (isExistCategory) {
+        rota_categoria = categoriaAtual + "/"
+    }
+
+    if (isExistOrder) {
+        rota_ordem = parametros.get("ordem") + "/"
+    }
+
+
+    fetch("http://localhost:3000/produtos/" + rota_categoria + rota_ordem, { method: "GET" })
         .then(response => response.json())
         .then((produtos) => {
             produtos.forEach(produto => {
@@ -43,3 +66,28 @@ function fnMontarCardProduto(produto) {
     `
     document.querySelector(".lista-produtos").innerHTML += cartao
 }
+
+
+function fnAlterarNomeFiltro(){
+    const filtro = document.querySelector(".texto_filtro");
+    const textoFiltro = filtro.textContent;
+
+    const parametros = new URLSearchParams(window.location.search)
+    const isExistOrder = parametros.has("ordem");
+
+    if(isExistOrder){
+        const urlOrder = parametros.get("ordem")
+
+        console.log(urlOrder)
+
+        if(urlOrder == "preco"){
+            filtro.innerHTML = `Ordenar pelo preço`
+        }else if(urlOrder == "titulo"){
+            filtro.innerHTML = `Ordenar pelo título`
+        }
+    }else{
+        textoFiltro = "Filtrar"
+    }
+}
+
+fnAlterarNomeFiltro()

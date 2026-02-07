@@ -35,3 +35,6 @@
 
     --  10 - Trazer todos os produtos em ordem de avaliacao do menor para maior
     SELECT * FROM produtos ORDER BY avaliacao ASC
+
+
+    SELECT * FROM produtos WHERE categoria = "camisetas" ORDER BY titulo ASC
