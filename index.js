@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+const cors = require("cors");
+app.use(cors())
+
 const porta = 3000;
 
 app.listen(porta);
@@ -8,11 +11,11 @@ app.listen(porta);
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
     res.send("ItanInfo");
 });
 
 // Arrey de produtos - Método inicial
+
 // const lista_produtos = [
 //     {
 //         "titulo": "Red Nike",
@@ -43,6 +46,7 @@ app.get("/", (req, res) => {
 
 
 // Conexão com o banco de dados
+
 let mysql = require("mysql");
 let conexao = mysql.createConnection({
     host: "108.179.193.209",
@@ -51,7 +55,7 @@ let conexao = mysql.createConnection({
     database: "gutoxa27_bd_loja"
 });
 
-conexao.connect(function (erro) {
+conexao.connect( (erro) => {
     if (erro) {
         console.log("Deu ruim na conexão \n");
         // console.log(erro)
@@ -63,16 +67,12 @@ conexao.connect(function (erro) {
 
 // Read All - [GET] / produtos
 app.get("/produtos", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
     conexao.query(`SELECT * FROM produtos`, (erro, lista_produtos, campos) => {
         res.send(lista_produtos);
     });
 });
 
 app.get("/produtos/:categoria", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
     const parameterCategory = req.params.categoria;
 
     conexao.query(`SELECT * FROM produtos WHERE categoria = '${parameterCategory}'`, (error, listar_produtos, campos) => {
@@ -81,8 +81,6 @@ app.get("/produtos/:categoria", (req, res) => {
 });
 
 app.get("/produtos/:categoria/:ordem", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
     const parameterCategory = req.params.categoria;
     const parameterOrder = req.params.ordem;
     const queryOrder = `SELECT * FROM produtos WHERE categoria = '${parameterCategory}' ORDER BY ${parameterOrder} ASC`;
@@ -93,8 +91,6 @@ app.get("/produtos/:categoria/:ordem", (req, res) => {
 })
 
 app.get("/unidades", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
     conexao.query("SELECT * FROM unidades", (erro, lista_unidades, campos) => {
         console.log(lista_unidades);
         res.send(lista_unidades);
