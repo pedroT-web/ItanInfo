@@ -90,9 +90,33 @@ app.get("/produtos/:categoria/:ordem", (req, res) => {
     })
 })
 
+app.post("/produto/", (req, res) => {
+    const { titulo, preco, descricao, avaliacao, foto, categoria } = req.body;
+    conexao.query(`INSERT INTO produtos(titulo, foto, descricao, preco, avaliacao, categoria) VALUES ('${titulo}', '${foto}', '${descricao}' , ${preco}, '${avaliacao}', '${categoria}')` , 
+        function(erro, resultado){
+            if(erro){
+                res.json(erro);
+            }
+            res.send(resultado.insertId);
+        }
+    )
+})
+
 app.get("/unidades", (req, res) => {
     conexao.query("SELECT * FROM unidades", (erro, lista_unidades, campos) => {
         console.log(lista_unidades);
         res.send(lista_unidades);
     });
 });
+
+app.post("/unidade/", (req, res) =>{
+    const { nomeUnidade, telefoneUnidade, emailUnidade, enderecoUnidade, fotoUnidade } = req.body;
+    conexao.query(`INSERT INTO unidades(nome_da_loja, telefone, email, endereco, foto) values ('${nomeUnidade}', '${telefoneUnidade}', '${emailUnidade}', '${enderecoUnidade}', '${fotoUnidade}')`, 
+        function (erro, resultado){
+            if(erro){
+                res.json(erro);
+            }
+            res.send(resultado.insertId);
+        }
+    )
+})
