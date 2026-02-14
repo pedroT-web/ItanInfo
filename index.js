@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 
+const bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
 const cors = require("cors");
 app.use(cors())
 
@@ -55,7 +59,7 @@ let conexao = mysql.createConnection({
     database: "gutoxa27_bd_loja"
 });
 
-conexao.connect( (erro) => {
+conexao.connect((erro) => {
     if (erro) {
         console.log("Deu ruim na conexão \n");
         // console.log(erro)
@@ -84,17 +88,17 @@ app.get("/produtos/:categoria/:ordem", (req, res) => {
     const parameterCategory = req.params.categoria;
     const parameterOrder = req.params.ordem;
     const queryOrder = `SELECT * FROM produtos WHERE categoria = '${parameterCategory}' ORDER BY ${parameterOrder} ASC`;
-    
+
     conexao.query(queryOrder, (error, listar_produtos, campos) => {
         res.send(listar_produtos);
     })
 })
 
 app.post("/produto/", (req, res) => {
-    const { titulo, preco, descricao, avaliacao, foto, categoria } = req.body;
-    conexao.query(`INSERT INTO produtos(titulo, foto, descricao, preco, avaliacao, categoria) VALUES ('${titulo}', '${foto}', '${descricao}' , ${preco}, '${avaliacao}', '${categoria}')` , 
-        function(erro, resultado){
-            if(erro){
+    const data = req.body;
+    conexao.query('INSERT INTO produtos set ?', [data],
+        function (erro, resultado) {
+            if (erro) {
                 res.json(erro);
             }
             res.send(resultado.insertId);
@@ -109,14 +113,30 @@ app.get("/unidades", (req, res) => {
     });
 });
 
-app.post("/unidade/", (req, res) =>{
-    const { nomeUnidade, telefoneUnidade, emailUnidade, enderecoUnidade, fotoUnidade } = req.body;
-    conexao.query(`INSERT INTO unidades(nome_da_loja, telefone, email, endereco, foto) values ('${nomeUnidade}', '${telefoneUnidade}', '${emailUnidade}', '${enderecoUnidade}', '${fotoUnidade}')`, 
-        function (erro, resultado){
-            if(erro){
+app.post("/unidade/", (req, res) => {
+    const data = req.body;
+    conexao.query('INSERT INTO unidades set?', [data],
+        function (erro, resultado) {
+            if (erro) {
                 res.json(erro);
             }
             res.send(resultado.insertId);
         }
     )
+})
+
+app.post("/login/", (req, res) => {
+    const usuario = req.body.usuario
+    const senha = req.body.senha
+    conexao.query(`SELECT * FROM usuarios WHERE usuario = '${usuario}' AND senha = '${senha}'`,(erro, resultado, campo) =>{
+        if(erro){
+            res.send(erro)
+        }else{
+            if(resultado.length > 0){
+                res.status(200).send("SUCESSO!!")
+            }else{
+                res.status(401).send("Inválido!")
+            }
+        }
+    })
 })

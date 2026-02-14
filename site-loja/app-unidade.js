@@ -33,6 +33,10 @@ function fnCadastrarUnidades() {
         .then((dados) => {
             fnLimparCampos()
             console.log(dados)
+
+            fnMensagemSalvar()
+            // const tituloUnidade = formDadosUnidades.nomeUnidade
+            // fnGerarTosts(tituloProduto)
         })
         .catch(erro => console.log(erro.message))
 }
@@ -50,3 +54,22 @@ btn_salvar.addEventListener("click", () => {
 })
 
 
+// function fnGerarTosts(unidade) {
+//     const toastLiveExample = document.getElementById('liveToast')
+
+//     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+//     toastBootstrap.show()
+
+//     const label = document.getElementById("sucesso-produto")
+//     label.innerHTML = `${unidade}`
+// }
+
+
+// Jeito do bootstrap
+function fnMensagemSalvar() {
+    var toastElList = [].slice.call(document.getAnimations.querySelectorAll(".toast"))
+    var toastList = totalElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl)
+    })
+    toastElList.forEach(toast => toast.show())
+}

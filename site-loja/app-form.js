@@ -1,3 +1,4 @@
+let formDados = {}
 function fnAlterarFoto() {
     if (foto.value != '') {
         document.getElementById("fundo-imagem").style.backgroundImage = `url('${foto.value}')`
@@ -13,7 +14,7 @@ function fnLimparCampos() {
 
 function fnCadastrarProdutos() {
 
-    let formDados = {
+    formDados = {
         titulo: document.getElementById("titulo").value,
         preco: document.getElementById("preco").value,
         descricao: document.getElementById("descricao").value,
@@ -21,19 +22,24 @@ function fnCadastrarProdutos() {
         foto: document.getElementById("foto").value,
         categoria: document.getElementById("categoria").value
     }
-    console.dir(formDados)
 
     fetch('http://localhost:3000/produto/', {
         method: "POST",
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formDados)
     })
         .then(resposta => resposta.json())
         .then((dados) => {
             fnLimparCampos()
+
+            const tituloProduto = formDados.titulo
+            fnGerarTosts(tituloProduto)
+
             console.log(dados)
+
         })
         .catch(erro => console.log(erro.message))
+        
 }
 
 let foto = document.getElementById("foto")
@@ -47,5 +53,16 @@ foto.addEventListener("blur", function () {
 btn_salvar.addEventListener("click", () => {
     fnCadastrarProdutos()
 })
+
+// Jeito Próprio
+function fnGerarTosts(produto) {
+    const toastLiveExample = document.getElementById('liveToast')
+
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+
+    const label = document.getElementById("sucesso-produto")
+    label.innerHTML = `${produto}`
+}
 
 

@@ -11,6 +11,9 @@
 
     - mysql
         - Biblioteca utilizada para conectar o projeto node.js com o mysql.
+
+    - body_parser
+        -  Middleware para Node.js, que facilita a extração e análise dos dados contidos no corpo (body) de uma requisição HTTP de entrada, como as enviadas via método POST. 
 ```
 
 ## Como instalar cada biblioteca (Terminal)
@@ -33,8 +36,13 @@
     npm install cors  
 ```
 
+#### body-parser
+ ```bash
+    npm install body-parser  
+```
 
-## Como utilizar cada Biblioteca
+
+## Como utilizar cada Biblioteca e Framework
 
 #### Nodemon
 - Alterar "scripts" no arquivo package.json
@@ -63,6 +71,14 @@ let conexao = mysql.createConnection({
 });
 ```
 
+#### body-parser
+- Adicionar nos arquivos que terão as rotas
+```js
+const bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+```
+
 #### cors
 - Adicionar nos arquivos que terão as rotas
 ```js
@@ -70,6 +86,4 @@ const cors = require("cors");
 app.use(cors())
 ```
 
-#### Cadastro de produtos
-## Frontend
-## Backend
+<br>
