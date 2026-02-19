@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const bodyParser = require("body-parser")
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 const cors = require("cors");
@@ -115,7 +115,7 @@ app.get("/unidades", (req, res) => {
 
 app.post("/unidade/", (req, res) => {
     const data = req.body;
-    conexao.query('INSERT INTO unidades set?', [data],
+    conexao.query('INSERT INTO unidades set ?', [data],
         function (erro, resultado) {
             if (erro) {
                 res.json(erro);
@@ -128,15 +128,30 @@ app.post("/unidade/", (req, res) => {
 app.post("/login/", (req, res) => {
     const usuario = req.body.usuario
     const senha = req.body.senha
-    conexao.query(`SELECT * FROM usuarios WHERE usuario = '${usuario}' AND senha = '${senha}'`,(erro, resultado, campo) =>{
-        if(erro){
+    conexao.query(`SELECT * FROM usuarios WHERE usuario = '${usuario}' AND senha = '${senha}'`, (erro, resultado, campo) => {
+        if (erro) {
             res.send(erro)
-        }else{
-            if(resultado.length > 0){
-                res.status(200).send("SUCESSO!!")
-            }else{
-                res.status(401).send("Inválido!")
+        } else {
+            if (resultado.length > 0) {
+                res.sendStatus(200)
+            } else {
+                res.sendStatus(401)
             }
         }
     })
+})
+
+
+app.post("/cadastro/", (req, res) => {
+    const data = req.body
+
+    console.log(data)
+
+    conexao.query('INSERT INTO usuarios set ?', [data], (erro, resultado, campo) => {
+        if (erro) {
+            res.sendStatus(401)
+        } else {
+            res.sendStatus(200)
+        }
+    })  
 })
