@@ -71,11 +71,12 @@ conexao.connect((erro) => {
 
 // Read All - [GET] / produtos
 app.get("/produtos", (req, res) => {
-    conexao.query(`SELECT * FROM produtos`, (erro, lista_produtos, campos) => {
+    conexao.query(`SELECT * FROM produtos LIMIT 10`, (erro, lista_produtos, campos) => {
         res.send(lista_produtos);
     });
 });
 
+// Read produtos/categoria - [GET] / produtos
 app.get("/produtos/:categoria", (req, res) => {
     const parameterCategory = req.params.categoria;
 
@@ -84,6 +85,7 @@ app.get("/produtos/:categoria", (req, res) => {
     });
 });
 
+// Read produtos/categoria/ordem - [GET] / produtos
 app.get("/produtos/:categoria/:ordem", (req, res) => {
     const parameterCategory = req.params.categoria;
     const parameterOrder = req.params.ordem;
@@ -91,6 +93,14 @@ app.get("/produtos/:categoria/:ordem", (req, res) => {
 
     conexao.query(queryOrder, (error, listar_produtos, campos) => {
         res.send(listar_produtos);
+    })
+})
+
+// Read ONE - [GET] / produto
+app.get("/produto/:id", (req, res) => {
+    const id = req.params.id
+    conexao.query('SELECT * FROM produtos WHERE id = ?', [id], (err, dados, campos) => {
+        res.send(dados)
     })
 })
 
@@ -153,5 +163,5 @@ app.post("/cadastro/", (req, res) => {
         } else {
             res.sendStatus(200)
         }
-    })  
+    })
 })
